@@ -6,39 +6,47 @@ char *ignore;
 
 int main(int argc, char *argv[]) {
     int opt;
+    int optcount =0;
     while ((opt = getopt(argc, argv, "vo:i:anpr")) != -1) {
         switch (opt) {
             case 'v':
                 verbose = 1;
+                optcount++;
                 break;
             case 'o':
                 only = optarg;
+                optcount++;
                 if(verbose){
                     printf("only synching files that constain %s\n", only);
                 }
                 break;
             case 'i':
                 ignore = optarg;
+                optcount++;
                 if(verbose){
                     printf("only synching files that constain %s\n", ignore);
                 }
                 break;
             case 'a':
+                optcount++;
                 if(verbose){
                     printf("synchronizing all files\n");
                 }
                 break;
             case 'n':
+                optcount++;
                 if(verbose){
                     printf("files identified, not actually synchronised\n");
                 }
                 break;
             case 'p':
+                optcount++;
                 if(verbose){
                     printf("new copy of file have same permisions as old file\n");
                 }
                 break;
             case 'r':
+                optcount++;
                 if(verbose){
                     printf("recursively process all files\n");
                 }
@@ -49,6 +57,16 @@ int main(int argc, char *argv[]) {
                 return 1;
         }
     }
+
+
+
+    for (int argument = optcount; argument < argc; argument++ ){
+        if(verbose){
+            printf("reading directory:%s\n", argv[argument]);//
+            scanDirectory(argv[argument]);
+        }
+    }
+
 
     if (verbose) {
         printf("Verbose mode enabled\n");
