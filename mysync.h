@@ -4,8 +4,10 @@
 
 #include <stdio.h>
 #include <string.h>
-// verbose.h
-extern int verbose;
+#include <unistd.h>
 
+extern int verbose;
+extern char *ignore;
+extern char *only;
 
 #endif  // MYSYNC_H
