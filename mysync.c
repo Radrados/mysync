@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
                 break;
             case 'o':
                 only = optarg;
-                optcount++;
+                optcount++;//yokrt7k7p9y0p;uio
                 if(verbose){
                     printf("only synching files that constain %s\n", only);
                 }
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     for (int argument = optcount; argument < argc; argument++ ){
         if(verbose){
             printf("reading directory:%s\n", argv[argument]);//
-            scanDirectory(argv[argument]);
+            searchDir(argv[argument]);
         }
     }
 
