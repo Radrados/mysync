@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -g
 TARGET = mysync
 
 # Source files
-SRCS = mysync.c searchDir.c list.c hashtable.c
+SRCS = mysync.c searchDir.c list.c hashtable.c globals.c
 
 # Object files are generated from source files and are the input to the linker
 OBJS = $(SRCS:.c=.o)

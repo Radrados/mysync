@@ -23,36 +23,36 @@ LIST *list_new(void)
 bool list_find(LIST *list, char *wanted)
 {
     while(list != NULL) {
-	if(strcmp(list->string, wanted) == 0) {
-	    return true;
-	}
-	list	= list->next;
-    }
+        if(strcmp(list->filename, wanted) == 0) {
+            return true;
+        }
+        list	= list->next;
+        }
     return false;
 }
 
 //  ALLOCATE SPACE FOR A NEW LIST ITEM, TESTING THAT ALLOCATION SUCCEEDS
-LIST *list_new_item(char *newstring)
+LIST *list_new_item(char *newFilename, const char *newDirectory)
 {
     LIST *new       = calloc(1, sizeof(LIST) );
     CHECK_ALLOC(new);
-    new->string     =  strdup(newstring);
-    CHECK_ALLOC(new->string);
+    new->filename     =  strdup(newFilename);
+    new ->directory = strdup(newDirectory);
+
+    CHECK_ALLOC(new->filename);
+    CHECK_ALLOC(new->directory);
+
+
     new->next       =  NULL;
     return new;
 }
 
 //  ADD A NEW (STRING) ITEM TO AN EXISTING LIST
-LIST *list_add(LIST *list, char *newstring)
+LIST *list_add(LIST *list, char *newfilename, const char *newdDirectory)
 {
-    if(list_find(list, newstring)) {            // only add each item once
-        return list;
-    }
-    else {                                      // add new item to head of list
-        LIST *new   = list_new_item(newstring);
-        new->next   = list;
-        return new;
-    }
+    LIST *new   = list_new_item(newfilename, newdDirectory);
+    new->next   = list;
+    return new;
 }
 
 //  PRINT EACH ITEM (A STRING) IN A GIVEN LIST TO stdout
@@ -60,12 +60,12 @@ void list_print(LIST *list)
 {
     if(list != NULL) {
         while(list != NULL) {
-	    printf("%s", list->string);
-	    if(list->next != NULL) {
-	        printf(" -> ");
-            }
-	    list	= list->next;
+            printf("Directory: %s, Filename: %s", list->directory, list->filename);
+            if(list->next != NULL) {
+                printf(" -> ");
+                }
+            list	= list->next;
         }
-	printf("\n");
+        printf("\n");
     }
 }
