@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
                 verbose = 1;
                 optcount++;
                 break;
-            case 'o':
+            case 'o'://fuck you
                 only = optarg;
                 optcount++;//yokrt7k7p9y0p;uio
                 if(verbose){
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-
+//l;h;kj;kjgjhgfkgflhjggkjthat
     if (verbose) {
         printf("Verbose mode enabled\n");
     }
