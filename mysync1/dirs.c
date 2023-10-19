@@ -37,7 +37,7 @@ void searchDir(char * directory){
             vprint("\t%s is a hidden file\n", entry->d_name);
         }
 
-        //check if entry is directory
+        //check if entry is directory /
         else if (entry->d_type == DT_DIR) {
             vprint("\t%s is a directory.\n", entry->d_name);
         }
