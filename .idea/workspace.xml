@@ -12,7 +12,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="step 4 done&#10;&#10;write the main() function, whose initial task is simply to receive and validate the command-line options and arguments. Write a usage() function to report the program's synopsis, should command-line processing detect any errors.">
+    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysync1/dirs.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/dirs.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysync1/mysync1.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/mysync1.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysync1/mysync1.h" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/mysync1.h" afterDir="false" />
@@ -90,7 +91,7 @@
       <workItem from="1697466844740" duration="50480000" />
       <workItem from="1697726662370" duration="289000" />
       <workItem from="1697726958787" duration="9000" />
-      <workItem from="1697726979025" duration="1771000" />
+      <workItem from="1697726979025" duration="3450000" />
     </task>
     <task id="LOCAL-00001" summary="yes">
       <option name="closed" value="true" />
@@ -172,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697728507036</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read.">
+      <option name="closed" value="true" />
+      <created>1697729061053</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1697729061053</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,7 +198,8 @@
     <MESSAGE value="fixed files after recovery" />
     <MESSAGE value="steps 1,2,3 done" />
     <MESSAGE value="step 4 done&#10;&#10;write the main() function, whose initial task is simply to receive and validate the command-line options and arguments. Write a usage() function to report the program's synopsis, should command-line processing detect any errors." />
-    <option name="LAST_COMMIT_MESSAGE" value="step 4 done&#10;&#10;write the main() function, whose initial task is simply to receive and validate the command-line options and arguments. Write a usage() function to report the program's synopsis, should command-line processing detect any errors." />
+    <MESSAGE value="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read." />
+    <option name="LAST_COMMIT_MESSAGE" value="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

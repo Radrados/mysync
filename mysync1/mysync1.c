@@ -61,10 +61,12 @@ int main(int argc, char *argv[]){
 
     //for each directory fed to program
     for(int argument = optcount+1; argument <  argc; argument++){
+        vprint("trying to opend dir %s\n", argv[argument]);
         if(!canOpenDir(argv[argument])){
             printf("Can not open directory %s\n", argv[argument]);
         }
-        vprint("directory %i is : %s\n", argument-optcount, argv[argument]);
+        vprint("searching directory: %s\n", argv[argument]);
+        searchDir(argv[argument]);
     }
     vprint("\n");
 
