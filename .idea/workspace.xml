@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated />
+    <generated>
+      <config projectName="mysync" targetName="test2" />
+      <config projectName="mysync" targetName="test1" />
+      <config projectName="mysync" targetName="all" />
+      <config projectName="mysync" targetName="mysync" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -12,9 +17,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read.">
+    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="step 7 done&#10;&#10;add support for the -a command-line option when finding files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysync1/dirs.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/dirs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/files.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/files.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/globals.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/globals.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/hashtable.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/hashtable.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/list.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/list.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysync1/mysync1.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/mysync1.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysync1/mysync1.h" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/mysync1.h" afterDir="false" />
     </list>
@@ -27,6 +36,11 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/mysync1">
+      <ProjectState />
+    </projectState>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -34,6 +48,38 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="mysync" />
+              <option name="path" value="$PROJECT_DIR$/mysync1" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="mysync" />
+                <option name="path" value="$PROJECT_DIR$/mysync1" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$/mysync1" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="2.1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -43,40 +89,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "rad",
-    "last_opened_file_path": "/Users/radrados/CLionProjects/mysync",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "CLionExternalConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;rad&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/radrados/CLionProjects/mysync&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MakefileSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SYNC1" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-v -r -a test1 test2" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$/mysync1" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mysync" TARGET_NAME="mysync" CONFIG_NAME="mysync" version="1" RUN_PATH="$PROJECT_DIR$/mysync1/mysync1.o">
+  <component name="RunManager" selected="Makefile Application.test1">
+    <configuration name="test1" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mysync" TARGET_NAME="test1" CONFIG_NAME="test1" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test2" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mysync" TARGET_NAME="test2" CONFIG_NAME="test2" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Makefile Application.test1" />
+      <item itemvalue="Makefile Application.test2" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -91,7 +146,8 @@
       <workItem from="1697466844740" duration="50480000" />
       <workItem from="1697726662370" duration="289000" />
       <workItem from="1697726958787" duration="9000" />
-      <workItem from="1697726979025" duration="3450000" />
+      <workItem from="1697726979025" duration="9342000" />
+      <workItem from="1697737739876" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="yes">
       <option name="closed" value="true" />
@@ -181,7 +237,23 @@
       <option name="project" value="LOCAL" />
       <updated>1697729061053</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="step 6 done&#10;&#10;open and read each directory, locating all regular files in the directory. At this stage, limit your project to support just two directories, and to just print each filename as it is found.">
+      <option name="closed" value="true" />
+      <created>1697730448941</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1697730448941</updated>
+    </task>
+    <task id="LOCAL-00013" summary="step 7 done&#10;&#10;add support for the -a command-line option when finding files.">
+      <option name="closed" value="true" />
+      <created>1697730769273</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1697730769273</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,7 +271,9 @@
     <MESSAGE value="steps 1,2,3 done" />
     <MESSAGE value="step 4 done&#10;&#10;write the main() function, whose initial task is simply to receive and validate the command-line options and arguments. Write a usage() function to report the program's synopsis, should command-line processing detect any errors." />
     <MESSAGE value="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read." />
-    <option name="LAST_COMMIT_MESSAGE" value="step 5 done&#10;&#10;ensure that the actual command-line arguments are the names of directories that you can read." />
+    <MESSAGE value="step 6 done&#10;&#10;open and read each directory, locating all regular files in the directory. At this stage, limit your project to support just two directories, and to just print each filename as it is found." />
+    <MESSAGE value="step 7 done&#10;&#10;add support for the -a command-line option when finding files." />
+    <option name="LAST_COMMIT_MESSAGE" value="step 7 done&#10;&#10;add support for the -a command-line option when finding files." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <stdarg.h>
+#define CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
 
 
 extern void vprint(const char *fmt, ...);
@@ -56,17 +57,28 @@ typedef LIST * HASHTABLE;
 // THESE FUNCTIONS ARE DECLARED HERE, AND DEFINED IN hashtable.c :
 #define	HASHTABLE_SIZE		997
 
+//global hashtable
+extern LIST *filesHashtable[HASHTABLE_SIZE];
+
+
 // ALLOCATE SPACE FOR A NEW HASHTABLE (AND ARRAY OF LISTS)
-extern HASHTABLE *hashtable_new(void);
+extern void hashtable_initialize(void);
+
+extern void storeFileInHash(char *directory, char *filepath);
+
 
 // ADD A NEW STRING TO A GIVEN HASHTABLE
-extern void hashtable_add(HASHTABLE *, char *filename, const char *directory);
+extern void hashtable_add( char *filepath, int directory);
 
 // DETERMINE IF A REQUIRED STRING ALREADY EXISTS IN A GIVEN HASHTABLE
-extern bool hashtable_find(HASHTABLE *, char *string);
+extern bool hashtable_find(char *string);
 
 // Prints all the contents of the hashtable
-extern void hashtable_print(HASHTABLE *hashtable);
+extern void hashtable_print();
+
+extern void initialize_directories(char *argv[], int argc, int optcount) ;
+
+
 
 
 #endif //MYSYNC_MYSYNC1_H

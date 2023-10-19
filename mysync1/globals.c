@@ -27,7 +27,6 @@ void initialize_globals() {
     ignore = NULL;
 
     dircount = 0;
-    directories = NULL;
 }
 
-HASHTABLE filesHashtable;  // definition
+LIST *filesHashtable[HASHTABLE_SIZE];

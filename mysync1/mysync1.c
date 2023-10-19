@@ -59,15 +59,43 @@ int main(int argc, char *argv[]){
     }
     vprint("number of options: %i\n\n", optcount);
 
+
+
+    /////////////////////start////////////////////////////
+
+    //initialize fileshasthable
+    hashtable_initialize();
+    initialize_directories(argv, argc, optcount);
+
     //for each directory fed to program
     for(int argument = optcount+1; argument <  argc; argument++){
-        vprint("trying to opend dir %s\n", argv[argument]);
+
+        //if can not open directory
         if(!canOpenDir(argv[argument])){
+
             printf("Can not open directory %s\n", argv[argument]);
+
+        }else{//it can open directory
+
+            dircount++;
+
+            vprint("searching directory: %s\n", argv[argument]);
+            directories[argument-optcount-1]= argv[argument];
+
+            //search directory
+            searchDir(argv[argument]);
         }
-        vprint("searching directory: %s\n", argv[argument]);
-        searchDir(argv[argument]);
+
     }
+
+
+
+
     vprint("\n");
+    printf(">>>>>>>>end>>>>>>>>\n");
+
+
+
+    return 0;
 
 }

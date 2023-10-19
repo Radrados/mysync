@@ -35,6 +35,7 @@ void searchDir(char * directory){
             }
 
             vprint("\t%s is a hidden file\n", entry->d_name);
+            storeFileInHash(directory, entry->d_name);
         }
 
         //check if entry is directory /
@@ -45,9 +46,37 @@ void searchDir(char * directory){
         //if not dir or hiden its a normal file
         else{
             vprint("\t%s is a normal file\n", entry -> d_name);
+            storeFileInHash(directory, entry->d_name);
+
         }
     }
 
     //close directory
     closedir(dir);
+}
+
+void initialize_directories(char *argv[], int argc, int optcount) {
+    // Find the length of the longest value in argv
+    int max_len = 0;
+    for (int i = 0; i < argc; i++) {
+        int len = strlen(argv[i]);
+        if (len > max_len) {
+            max_len = len;
+        }
+    }
+
+    // Allocate memory for the directories array
+    directories = (char **)malloc(optcount * sizeof(char *));
+    for (int i = 0; i < argc - optcount; i++) {
+        directories[i] = (char *)malloc((max_len + 1) * sizeof(char));  // +1 for the null terminator
+    }
+
+    // Initialize the strings with empty strings or copy from argv
+    for (int i = 0; i < optcount; i++) {
+        if (i < argc) {
+            strcpy(directories[i], argv[i]);
+        } else {
+            directories[i][0] = '\0';
+        }
+    }
 }
