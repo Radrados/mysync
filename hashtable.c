@@ -4,11 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hashtable.h"
+#include "mysync.h"
 
 //  RESEARCH SHOWS THAT USING PRIME-NUMBERS CAN IMPROVE PERFORMANCE
 //  c.f.  https://www.quora.com/Why-should-the-size-of-a-hash-table-be-a-prime-number
-#define	HASHTABLE_SIZE		997
 
 //  --------------------------------------------------------------------
 
@@ -38,12 +37,45 @@ HASHTABLE *hashtable_new(void)
 }
 
 //  ADD A NEW STRING TO A GIVEN HASHTABLE
-void hashtable_add(HASHTABLE *hashtable, char *string)
-{
-    uint32_t h   = hash_string(string) % HASHTABLE_SIZE;    // choose list
+void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory) {
+    uint32_t h = hash_string(filename) % HASHTABLE_SIZE; // choose list
+    char *fullpath = consturctFilepath(directory, filename);
 
-    hashtable[h] = list_add(hashtable[h], string);
+    char *dir;
+    char *filepath;
+
+    char *slashposition = strchr(fullpath, '/');
+    if (!slashposition) {
+        printf("Slash not found in fullpath!\n");
+        free(fullpath);
+        return;
+    }
+
+    int dirlen = slashposition - fullpath;
+    int filepathlen = strlen(fullpath) - dirlen - 1;
+
+    dir = (char *) malloc((dirlen + 1) * sizeof(char));
+    filepath = (char *) malloc((filepathlen + 1) * sizeof(char));
+    if (!dir || !filepath) {
+        printf("Memory allocation failed!\n");
+        free(fullpath);
+        return;
+    }
+
+    // Copy strings into allocated memory
+    strncpy(dir, fullpath, dirlen);
+    dir[dirlen] = '\0';
+
+    strcpy(filepath, slashposition + 1);
+
+    hashtable[h] = list_add(hashtable[h], filepath, findDirIndex(dir)); // change to dirindex
+
+    // Don't forget to free memory when done
+    free(fullpath);
+    free(dir);
+    free(filepath);
 }
+
 
 //  DETERMINE IF A REQUIRED STRING ALREADY EXISTS IN A GIVEN HASHTABLE
 bool hashtable_find(HASHTABLE *hashtable, char *string)
@@ -51,4 +83,17 @@ bool hashtable_find(HASHTABLE *hashtable, char *string)
     uint32_t h	= hash_string(string) % HASHTABLE_SIZE;     // choose list
 
     return list_find(hashtable[h], string);
+}
+void hashtable_print(HASHTABLE *hashtable) {
+    for (int i = 0; i < HASHTABLE_SIZE; i++) {
+        LIST *current_list = hashtable[i];
+        if (current_list) { // Check if the bucket is not empty
+            printf("Bucket %d:\n", i); // Print the bucket number
+            while (current_list) {
+                printf("\tfilename: %s, directory index: %d\n", current_list->filepath, current_list->dirindex);
+                current_list = current_list->next;
+            }
+            printf("\n"); // For better readability between buckets
+        }
+    }
 }

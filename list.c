@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "list.h"
+#include "mysync.h"
 
 //  ON LINUX WE NEED TO PROTOTYPE THE (NON-STANDARD) strdup() FUNCTION 
 //  WHY?  https://stackoverflow.com/questions/32944390/what-is-the-rationale-for-not-including-strdup-in-the-c-standard
@@ -23,36 +23,68 @@ LIST *list_new(void)
 bool list_find(LIST *list, char *wanted)
 {
     while(list != NULL) {
-	if(strcmp(list->string, wanted) == 0) {
-	    return true;
-	}
-	list	= list->next;
-    }
+        if(strcmp(list->filepath, wanted) == 0) {
+            return true;
+        }
+        list	= list->next;
+        }
     return false;
 }
 
+LIST* list_pop(LIST **head) {
+    if (*head == NULL) {
+        return NULL;  // Return NULL if list is empty
+    }
+
+    // Save the head item
+    LIST *popped_item = *head;
+
+    // Move the head pointer to the next item
+    *head = (*head)->next;
+
+    // Remove 'next' link from the popped item to fully detach it from the list
+    popped_item->next = NULL;
+
+    return popped_item;
+}
+
+LIST* list_peek(LIST **head) {
+    if (*head == NULL) {
+        return NULL;  // Return NULL if list is empty
+    }
+
+    // Save the head item
+    LIST *popped_item = *head;
+
+    return popped_item;
+}
+
 //  ALLOCATE SPACE FOR A NEW LIST ITEM, TESTING THAT ALLOCATION SUCCEEDS
-LIST *list_new_item(char *newstring)
+LIST *list_new_item(char *filepath, int dirindex)
 {
     LIST *new       = calloc(1, sizeof(LIST) );
     CHECK_ALLOC(new);
-    new->string     =  strdup(newstring);
-    CHECK_ALLOC(new->string);
+    new->filepath     =  strdup(filepath);
+    new ->dirindex = dirindex;
+
+    CHECK_ALLOC(new->filepath);
+//    CHECK_ALLOC(new->dirindex);
+
+
     new->next       =  NULL;
     return new;
 }
 
 //  ADD A NEW (STRING) ITEM TO AN EXISTING LIST
-LIST *list_add(LIST *list, char *newstring)
+LIST *list_add(LIST *list, char *filepath, int dirindex)
 {
-    if(list_find(list, newstring)) {            // only add each item once
-        return list;
-    }
-    else {                                      // add new item to head of list
-        LIST *new   = list_new_item(newstring);
-        new->next   = list;
-        return new;
-    }
+
+
+    //calculate dir index if exists add new if not
+    //add filepath to list, add index to list
+    LIST *new   = list_new_item(filepath, dirindex);
+    new->next   = list;
+    return new;
 }
 
 //  PRINT EACH ITEM (A STRING) IN A GIVEN LIST TO stdout
@@ -60,12 +92,12 @@ void list_print(LIST *list)
 {
     if(list != NULL) {
         while(list != NULL) {
-	    printf("%s", list->string);
-	    if(list->next != NULL) {
-	        printf(" -> ");
-            }
-	    list	= list->next;
+            printf("filepath: %s, directory index: %i", list->filepath, list->dirindex);
+            if(list->next != NULL) {
+                printf(" -> ");
+                }
+            list	= list->next;
         }
-	printf("\n");
+        printf("\n");
     }
 }
