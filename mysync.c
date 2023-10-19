@@ -2,7 +2,6 @@
 #include "globals.h"
 
 
-HASHTABLE *filesHashtable;
 
 int main(int argc, char *argv[]) {
     int opt;
@@ -70,7 +69,7 @@ int main(int argc, char *argv[]) {
         printf("Verbose mode enabled\n");
     }
 
-    filesHashtable = hashtable_new();
+    filesHashtable = *hashtable_new();
     dircount = argc  - optcount-1;//number of directories
     indexDirs(argv, argc, dircount);
     int dirc = 0;
@@ -85,7 +84,7 @@ int main(int argc, char *argv[]) {
     if(verbose){
         printf("\n there are %i directories\n", dirc);
         printf("\n printing hashtable\n");
-        hashtable_print(filesHashtable);
+        hashtable_print(&filesHashtable);
 
     }
 

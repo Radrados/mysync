@@ -4,41 +4,44 @@
 #include "globals.h"
 #include "mysync.h"
 
-time_t newest_mod_time(char *filename, int bucket){
-    LIST *current = filesHashtable[bucket];
+void newest_mod_time(long int *mostRecentArr, char *filename, int bucket){
+    LIST *current = &filesHashtable[bucket];
     struct stat file_stat;
+    long int mostRecentDir;
 
     if (stat(filename, &file_stat) != 0) {
         perror("Failed to get file status");
-        return -1;
     }
 
     time_t mostRecent = file_stat.st_mtimespec.tv_sec;
     printf("current most recent is %li\n", mostRecent);
     while(current != NULL){
         //check you can get the stat from filename
-        if (stat(current->filename, &file_stat) != 0) {
+        if (stat(current->filepath, &file_stat) != 0) {
             perror("Failed to get file status for list item");
         } else {
             //if current is more recent than mostrecent update morstrecent
             if (file_stat.st_mtimespec.tv_sec > mostRecent) {
                 mostRecent = file_stat.st_mtimespec.tv_sec;
+                mostRecentDir = current->dirindex;
             }
         }
         current = current->next;  // Move to the next item in the list
     }
-    return mostRecent;
+    mostRecentArr[0]= mostRecent;
+    mostRecentArr[1]= mostRecentDir;
 }
 
 void updateBucket(int bucket){
-    LIST *list = filesHashtable[bucket];
+    LIST *list = &filesHashtable[bucket];
     LIST currfile;
-    long int mostrecent;
+    long int mostrecent[2];
+
     while(list != NULL){
         currfile = *list_peek(&list);
-        mostrecent = newest_mod_time(currfile.filepath, bucket);//finds the modtime of the newest file with the filename of the top of the
-
-
+        newest_mod_time(mostrecent, currfile.filepath, bucket);//finds the modtime of the newest file with the filename of the top of the
+        //mostrecent0 is the time of the most recent
+        //mostrecent 1 is the dir index of the most up to date file
     }
 
 
