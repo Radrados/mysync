@@ -72,9 +72,9 @@ void initialize_directories(char *argv[], int argc, int optcount) {
     }
 
     // Initialize the strings with empty strings or copy from argv
-    for (int i = 0; i < optcount; i++) {
+    for (int i = optcount+1 ; i < argc; i++) {
         if (i < argc) {
-            strcpy(directories[i], argv[i]);
+            strcpy(directories[i-optcount-1], argv[i]);
         } else {
             directories[i][0] = '\0';
         }

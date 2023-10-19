@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
 
 
 
-
+    hashtable_print();
     vprint("\n");
     printf(">>>>>>>>end>>>>>>>>\n");
 

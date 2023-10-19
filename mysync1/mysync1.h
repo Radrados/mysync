@@ -14,6 +14,8 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <stdarg.h>
+#include <time.h>
+
 #define CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
 
 
@@ -29,6 +31,7 @@ extern void searchDir(char * directory);
 typedef struct _list {
     char *filepath;   // filepath excluding the first directoru
     int dirindex;  // to store the directory index
+    long int modTime; // to store the time since 1970 it was last modded
     struct _list *next;
 } LIST;
 
@@ -43,7 +46,7 @@ extern LIST *list_pop(LIST **list);
 extern LIST *list_peek(LIST **list);
 
 // ADD A NEW (STRING) ITEM TO AN EXISTING LIST
-extern LIST *list_add(LIST *list, char *filepath, int dirindex);
+extern LIST *list_add(LIST *list, char *filepath, int dirindex, long int modTime);
 
 // DETERMINE IF A REQUIRED ITEM (A STRING) IS STORED IN A GIVEN LIST
 extern bool list_find(LIST *list, char *wanted);
@@ -68,7 +71,7 @@ extern void storeFileInHash(char *directory, char *filepath);
 
 
 // ADD A NEW STRING TO A GIVEN HASHTABLE
-extern void hashtable_add( char *filepath, int directory);
+extern void hashtable_add( char *filepath, int directory, long int modTime);
 
 // DETERMINE IF A REQUIRED STRING ALREADY EXISTS IN A GIVEN HASHTABLE
 extern bool hashtable_find(char *string);

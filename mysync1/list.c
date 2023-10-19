@@ -22,29 +22,28 @@ bool list_find(LIST *list, char *wanted)
 }
 
 // Create a new list item with a given filepath and dirindex
-LIST *list_new_item(char *new_filepath, int dirindex)
+LIST *list_new_item(char *new_filepath, int dirindex, long int modTime)
 {
     LIST *new = calloc(1, sizeof(LIST) );
     CHECK_ALLOC(new);
     new->filepath = strdup(new_filepath);
     CHECK_ALLOC(new->filepath);
     new->dirindex = dirindex;
+    new->modTime = modTime;
     new->next = NULL;
     return new;
 }
 
 
 // Add a new filepath to the list (if it doesn't exist) and associate it with a directory index
-LIST *list_add(LIST *list, char *new_filepath, int dirindex)
+LIST *list_add(LIST *list, char *new_filepath, int dirindex, long int modTime)
 {
-    if(list_find(list, new_filepath)) { // only add each item once
-        return list;
-    }
-    else { // add new item to head of list
-        LIST *new = list_new_item(new_filepath, dirindex);
+
+    // add new item to head of list
+        LIST *new = list_new_item(new_filepath, dirindex, modTime);
         new->next = list;
         return new;
-    }
+
 }
 
 // Print each item in the list

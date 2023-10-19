@@ -23,10 +23,10 @@ void hashtable_initialize(void)
 }
 
 // Add a new filepath and dirindex to the global filesHashtable
-void hashtable_add(char *filepath, int dirindex)
+void hashtable_add(char *filepath, int dirindex, long int modTime)
 {
     uint32_t h = hash_string(filepath) % HASHTABLE_SIZE;  // choose list
-    filesHashtable[h] = list_add(filesHashtable[h], filepath, dirindex);
+    filesHashtable[h] = list_add(filesHashtable[h], filepath, dirindex, modTime);
 }
 
 // Determine if a required filepath already exists in the global filesHashtable
@@ -38,24 +38,23 @@ bool hashtable_find(char *filepath)
 
 
 
-void hashtable_print(void)
-{
+void hashtable_print(void){
     printf("=== Files Hashtable ===\n");
 
-    for (uint32_t i = 0; i < HASHTABLE_SIZE; i++)
-    {
-        LIST *current = filesHashtable[i];
-        printf("Bucket %u: ", i);
+    for (uint32_t i = 0; i < HASHTABLE_SIZE; i++) {
+        if (filesHashtable[i] != NULL) { // Check if the bucket has content
 
-        while (current != NULL)
-        {
-            printf("{ filepath: %s, dirindex: %d }", current->filepath, current->dirindex);
-            current = current->next;
-            if (current != NULL)
-            {
-                printf(" -> ");
+            LIST *current = filesHashtable[i];
+            printf("Bucket %u: ", i);
+
+            while (current != NULL) {
+                printf("{ filepath: %s, dirindex: %d, modTime: %li }", current->filepath, current->dirindex, current->modTime);
+                current = current->next;
+                if (current != NULL) {
+                    printf(" -> ");
+                }
             }
+            printf("\n");
         }
-        printf("\n");
     }
 }
