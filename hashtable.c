@@ -38,7 +38,7 @@ HASHTABLE *hashtable_new(void)
 
 //  ADD A NEW STRING TO A GIVEN HASHTABLE
 void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory) {
-
+    printf("adding %s/%s to hashtabel\n", directory, filename);
     uint32_t h = hash_string(filename) % HASHTABLE_SIZE; // choose list
     char *fullpath = consturctFilepath(directory, filename);
     char *dir;

@@ -67,7 +67,7 @@ extern void updateBucket(int bucket);
 
 extern void indexDirs(char *argv[], int argc, int dircount);
 
-extern char *consturctFilepath(const char *directory, char *filename);
+extern char *consturctFilepath(const char *directory, const char *filename);
 
 extern int findDirIndex(char *dir);
 

@@ -51,9 +51,12 @@ void updateBucket(int bucket){//here dirindex is 2352345
 }
 void updateHash(){
     if(verbose){
-        printf("UPDATING HASHTABLE\n");
+        printf("UPDATING HASH TABLE1\n");
     }
     for(int bucket = 0; bucket< HASHTABLE_SIZE; bucket++){
+        if(verbose){
+            printf("updatingbucket %i", bucket);
+        }
         updateBucket(bucket);
     }
 

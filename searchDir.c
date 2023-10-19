@@ -26,9 +26,8 @@ void searchDir(const char *dirname) {
                     printf("\t%s is a directory.\n", file->d_name);
 
                 }//! searchDir(file);
-//                char new_path[1024];
-//                snprintf(new_path, sizeof(new_path), "%s/%s", dirname, file->d_name);
-//                searchDir(new_path);
+                char *fullpath = consturctFilepath(file->d_name, dirname);
+                searchDir(fullpath);
             } else{
                 continue;
             }

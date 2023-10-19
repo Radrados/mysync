@@ -5,7 +5,7 @@
 #include "mysync.h"
 #include "globals.h"
 
-char *consturctFilepath(const char *directory, char *filename){
+char *consturctFilepath(const char *directory, const char *filename){
     /////sgfadf
     int totallength = strlen(directory)+ strlen(filename)+2;
 
