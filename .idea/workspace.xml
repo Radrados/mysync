@@ -3,13 +3,28 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="fixed files after recovery" />
+    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="fixed files after recovery">
+      <change afterPath="$PROJECT_DIR$/mysync1/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysync1/files.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysync1/random.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/globals.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/globals.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/globals.h" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/globals.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/hashtable.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/hashtable.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/list.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/list.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/mysync1.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/mysync1.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/mysync1.h" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/mysync1.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysync1/syncHash.c" beforeDir="false" afterPath="$PROJECT_DIR$/mysync1/syncHash.c" afterDir="false" />
+    </list>
     <list id="24f8af67-a0c2-40df-994e-07b39aff1e4f" name="Changes by adits" comment="Changes by adits" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +64,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "CLionExternalConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -56,6 +72,18 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SYNC1" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-v -r -a test1 test2" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$/mysync1" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mysync" TARGET_NAME="mysync" CONFIG_NAME="mysync" version="1" RUN_PATH="$PROJECT_DIR$/mysync1/mysync1.o">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -68,6 +96,9 @@
       <workItem from="1695810659711" duration="612000" />
       <workItem from="1696274535816" duration="1201000" />
       <workItem from="1697466844740" duration="50480000" />
+      <workItem from="1697726662370" duration="289000" />
+      <workItem from="1697726958787" duration="9000" />
+      <workItem from="1697726979025" duration="836000" />
     </task>
     <task id="LOCAL-00001" summary="yes">
       <option name="closed" value="true" />

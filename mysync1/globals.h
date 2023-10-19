@@ -7,7 +7,7 @@
 
 #include "mysync1.h"
 //OPTIONS
-extern int verbose;
+extern bool  verbose;
 extern bool all;
 extern bool recursive;
 extern bool notchange;
@@ -19,12 +19,9 @@ extern char *ignore;
 extern int dircount;
 extern char **directories;
 
-// OUR SIMPLE LIST DATATYPE - A DATA ITEM, AND A POINTER TO ANOTHER LIST
-typedef struct _list {
-    char *filepath;   // filepath excluding the first directoru
-    int dirindex;  // to store the directory index
-    struct _list *next;
-} LIST;
+extern void initialize_globals();
+
+
 
 
 #endif //MYSYNC_GLOBALS_H
