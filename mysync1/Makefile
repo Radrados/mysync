@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -g
 TARGET = mysync
 
 # Source files
-SRCS = mysync1.c dirs.c list.c hashtable.c globals.c syncHash.c files.c
+SRCS = mysync1.c dirs.c list.c hashtable.c globals.c syncHash.c files.c random.c
 
 # Corrected the source files list here:
 

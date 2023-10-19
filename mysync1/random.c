@@ -1,7 +1,7 @@
 //
 // Created by RadRados on 19/10/2023.
 //
-#include "mysync.h"
+#include "mysync1.h"
 #include "globals.h"
 
 void vprint(const char *fmt, ...) {
@@ -11,4 +11,9 @@ void vprint(const char *fmt, ...) {
         vprintf(fmt, args);
         va_end(args);
     }
+}
+
+int usage(){
+    fprintf(stderr, "Usage: mysync [-v] [-o arg] [-i arg] [-p] [-n] [-a] [-r] \n");
+    return 1;
 }

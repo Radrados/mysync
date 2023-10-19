@@ -21,31 +21,41 @@ int main(int argc, char *argv[]){
             case 'v'://VERBOSE OPTION
                 verbose = true;
                 optcount++;
+                break;
 
             case 'r'://RECURSIVE OPTION
                 recursive = true;
                 optcount++;
+                break;
 
             case 'a'://INCLUDE HIDDEN FILEL
                 all = true;
                 optcount++;
+                break;
 
             case 'p'://COPY PERMISIONS OVER TOO
                 permisions = true;
                 optcount++;
+                break;
 
             case 'n'://DO   NOT CHANGE PERMISIONS, SET VERBOSE
                 notchange = true;
                 verbose = true;
                 optcount++;
+                break;
 
             default: /* '?' */
-                fprintf(stderr, "Usage: %s [-v] [-o arg] [-i arg] [-p] [-n] [-a] [-r] \n", argv[0]);
-                return 1;
+                usage();
+                break;
         }
     }
-    if(verbose || notchange){
 
+    vprint("Verbose mode active\n");
+    if(all){
+        vprint("Hidden files mode active\n");
     }
-
+    if (permisions){
+        vprint("permisions transfer mode active\n");
+    }
+    vprint("number of options: %i\n\n", optcount);
 }

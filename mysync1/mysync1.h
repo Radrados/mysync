@@ -13,10 +13,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <stdarg.h>
 
 
 extern void vprint(const char *fmt, ...);
 
+extern int usage();
 
 // OUR SIMPLE LIST DATATYPE - A DATA ITEM, AND A POINTER TO ANOTHER LIST
 typedef struct _list {
