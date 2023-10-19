@@ -5,6 +5,8 @@
 #include "mysync.h"
 
 void newest_mod_time(long int *mostRecentArr, char *filename, int bucket){
+    printf("segfaulttest    newestmodtime\n");
+
     LIST *current = &filesHashtable[bucket];
     struct stat file_stat;
     long int mostRecentDir;
@@ -33,11 +35,14 @@ void newest_mod_time(long int *mostRecentArr, char *filename, int bucket){
 }
 
 void updateBucket(int bucket){
+    printf("segfaulttest updating bucket %i\n", bucket);
     LIST *list = &filesHashtable[bucket];
     LIST currfile;
     long int mostrecent[2];
 
     while(list != NULL){
+        printf("segfaulttest list isnt null\n");
+
         currfile = *list_peek(&list);
         newest_mod_time(mostrecent, currfile.filepath, bucket);//finds the modtime of the newest file with the filename of the top of the
         //mostrecent0 is the time of the most recent
@@ -50,6 +55,7 @@ void updateHash(){
     if(verbose){
         printf("UPDATING HASHTABLE\n");
     }
+    printf("segfaulttest updatehash\n");
     for(int bucket = 0; bucket< HASHTABLE_SIZE; bucket++){
         updateBucket(bucket);
     }

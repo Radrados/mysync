@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="fixed files after recovery">
+      <change beforePath="$PROJECT_DIR$/files.c" beforeDir="false" afterPath="$PROJECT_DIR$/files.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/globals.c" beforeDir="false" afterPath="$PROJECT_DIR$/globals.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/globals.h" beforeDir="false" afterPath="$PROJECT_DIR$/globals.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashtable.c" beforeDir="false" afterPath="$PROJECT_DIR$/hashtable.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list.c" beforeDir="false" afterPath="$PROJECT_DIR$/list.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchDir.c" beforeDir="false" afterPath="$PROJECT_DIR$/searchDir.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/updateFiles.c" beforeDir="false" afterPath="$PROJECT_DIR$/updateFiles.c" afterDir="false" />
+    </list>
+    <list id="24f8af67-a0c2-40df-994e-07b39aff1e4f" name="Changes by adits" comment="Changes by adits" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2VyaDqRrZbbnNgmw7s11RxPt2AB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "rad",
+    "last_opened_file_path": "/Users/radrados/CLionProjects/mysync",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="" />
+      <created>1695810657547</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695810657547</updated>
+      <workItem from="1695810659711" duration="612000" />
+      <workItem from="1696274535816" duration="1201000" />
+      <workItem from="1697466844740" duration="50037000" />
+    </task>
+    <task id="LOCAL-00001" summary="yes">
+      <option name="closed" value="true" />
+      <created>1697470753651</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697470753651</updated>
+    </task>
+    <task id="LOCAL-00002" summary="options working">
+      <option name="closed" value="true" />
+      <created>1697472242349</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697472242349</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added hashtable and list">
+      <option name="closed" value="true" />
+      <created>1697476612535</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1697476612535</updated>
+    </task>
+    <task id="LOCAL-00004" summary="joined into 1 .h file &#10;searchdir prints all filenames in dir">
+      <option name="closed" value="true" />
+      <created>1697642989144</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697642989144</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changes by adits">
+      <option name="closed" value="true" />
+      <created>1697643075751</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697643075751</updated>
+    </task>
+    <task id="LOCAL-00006" summary="hashtable works">
+      <option name="closed" value="true" />
+      <created>1697657928602</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697657928602</updated>
+    </task>
+    <task id="LOCAL-00007" summary="recovered files">
+      <option name="closed" value="true" />
+      <created>1697687210502</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1697687210502</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fixed files after recovery">
+      <option name="closed" value="true" />
+      <created>1697693318688</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697693318688</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="yes" />
+    <MESSAGE value="options working" />
+    <MESSAGE value="added hashtable and list" />
+    <MESSAGE value="joined into 1 .h file &#10;searchdir prints all filenames in dir" />
+    <MESSAGE value="Changes by adits" />
+    <MESSAGE value="hashtable works" />
+    <MESSAGE value="recovered files" />
+    <MESSAGE value="fixed files after recovery" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed files after recovery" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/searchDir.c</url>
+          <line>34</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

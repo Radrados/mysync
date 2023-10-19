@@ -19,7 +19,7 @@ extern bool permisions;
 extern char *only;
 extern char *ignore;
 extern int dircount;
-extern char *directories;
+extern char **directories;
 
 extern HASHTABLE filesHashtable;
 #endif //MYSYNC_GLOBALS_H

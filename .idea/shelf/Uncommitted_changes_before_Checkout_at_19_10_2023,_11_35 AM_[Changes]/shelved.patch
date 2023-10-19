@@ -1,0 +1,540 @@
+Index: Makefile
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Compiler to use\nCC = gcc\n\n# Compiler flags, e.g. for debugging and for additional warnings\nCFLAGS = -Wall -Wextra -g\n\n# Target executable name\nTARGET = mysync\n\n# Source files\nSRCS = mysync.c searchDir.c list.c hashtable.c globals.c\n\n# Object files are generated from source files and are the input to the linker\nOBJS = $(SRCS:.c=.o)\n\n# Default target\nall: $(TARGET)\n\n# Rule to link the object files to create the target executable\n$(TARGET): $(OBJS)\n\t$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)\n\n# Rule to compile source files into object files\n# This is an implicit rule in make, and is included here for clarity\n.c.o:\n\t$(CC) $(CFLAGS) -c $<  -o $@\n\n# Rule to clean up the build directory\nclean:\n\trm -f $(OBJS) $(TARGET)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Makefile b/Makefile
+--- a/Makefile	
++++ b/Makefile	
+@@ -8,7 +8,7 @@
+ TARGET = mysync
+ 
+ # Source files
+-SRCS = mysync.c searchDir.c list.c hashtable.c globals.c
++SRCS = mysync.c searchDir.c list.c hashtable.c globals.c updateFiles.c
+ 
+ # Object files are generated from source files and are the input to the linker
+ OBJS = $(SRCS:.c=.o)
+Index: mysync.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"mysync.h\"\n#include \"globals.h\"\n\n\nHASHTABLE *filesHashtable;\n\nint main(int argc, char *argv[]) {\n    int opt;\n    int optcount =0;\n\n\n\n    while ((opt = getopt(argc, argv, \"vo:i:anpr\")) != -1) {\n        switch (opt) {\n            case 'v':\n                verbose = true;\n                optcount++;\n                break;\n            case 'o':\n                only = optarg;\n                optcount++;//yokrt7k7p9y0p;uio\n                if(verbose){\n                    printf(\"only synching files that constain %s\\n\", only);\n                }\n                break;\n            case 'i':\n                ignore = optarg;\n                optcount++;\n                if(verbose){\n                    printf(\"only synching files that constain %s\\n\", ignore);\n                }\n                break;\n            case 'a':\n                optcount++;\n                if(verbose){\n                    printf(\"synchronizing all files\\n\");\n                }\n                all = true;\n                break;\n            case 'n':\n                optcount++;\n                if(verbose){\n                    printf(\"files identified, not actually synchronised\\n\");\n                }\n                notchange = true;\n                break;\n            case 'p':\n                optcount++;\n                if(verbose){\n                    printf(\"new copy of file have same permisions as old file\\n\");\n                }\n                permisions = true;\n\n                break;\n            case 'r':\n                optcount++;\n                if(verbose){\n                    printf(\"recursively process all files\\n\");\n                }\n                recursive= true;\n                break;\n\n            default: /* '?' */\n                fprintf(stderr, \"Usage: %s [-v] [-o arg] \\n\", argv[0]);\n                return 1;\n        }\n    }\n    if (verbose) {\n        printf(\"Verbose mode enabled\\n\");\n    }\n\n    filesHashtable = hashtable_new();\n\n\n    for (int argument = optcount+1; argument < argc; argument++ ){\n        if(verbose){\n            printf(\"reading directory:%s\\n\", argv[argument]);//\n            searchDir(argv[argument]);//test\n        }\n    }\n    if(verbose){\n        printf(\"\\n printing hashtable\\n\");\n    }\n    hashtable_print(filesHashtable);\n\n//l;h;kj;kjgjhgfkgflhjggkjthat\n\n\n    return 0;\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/mysync.c b/mysync.c
+--- a/mysync.c	
++++ b/mysync.c	
+@@ -43,6 +43,7 @@
+                     printf("files identified, not actually synchronised\n");
+                 }
+                 notchange = true;
++                verbose = true;
+                 break;
+             case 'p':
+                 optcount++;
+@@ -70,21 +71,26 @@
+     }
+ 
+     filesHashtable = hashtable_new();
+-
+-
+-    for (int argument = optcount+1; argument < argc; argument++ ){
++    dircount = argc  - optcount-1;//number of directories
++    indexDirs(argv, argc, dircount);
++    int dirc = 0;
++    for (int directory = optcount+1; directory < argc; directory++ ){
+         if(verbose){
+-            printf("reading directory:%s\n", argv[argument]);//
+-            searchDir(argv[argument]);//test
++            printf("\nreading directory:%s\n", argv[directory]);//
+         }
++        searchDir(argv[directory]);//test
++        dirc = directory-optcount;
+     }
++
+     if(verbose){
++        printf("\n there are %i directories\n", dirc);
+         printf("\n printing hashtable\n");
+-    }
+-    hashtable_print(filesHashtable);
++        hashtable_print(filesHashtable);
+ 
+-//l;h;kj;kjgjhgfkgflhjggkjthat
++    }
+ 
++
++    updateHash();
+ 
+     return 0;
+ }
+Index: hashtable.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include <stdio.h>\n#include <stdbool.h>\n#include <stdint.h>\n#include <stdlib.h>\n#include <string.h>\n\n#include \"mysync.h\"\n\n//  RESEARCH SHOWS THAT USING PRIME-NUMBERS CAN IMPROVE PERFORMANCE\n//  c.f.  https://www.quora.com/Why-should-the-size-of-a-hash-table-be-a-prime-number\n#define\tHASHTABLE_SIZE\t\t997\n\n//  --------------------------------------------------------------------\n\n//  FUNCTION hash_string() ACCEPTS A STRING PARAMETER,\n//  AND RETURNS AN UNSIGNED 32-BIT INTEGER AS ITS RESULT\n//\n//  see:  https://en.cppreference.com/w/c/types/integer\n\nuint32_t hash_string(char *string)\n{\n    uint32_t hash = 0;\n\n    while(*string != '\\0') {\n        hash = hash*33 + *string;\n        ++string;\n    }\n    return hash;\n}\n\n//  ALLOCATE AND INITIALISE SPACE FOR A NEW HASHTABLE (AN ARRAY OF LISTS)\nHASHTABLE *hashtable_new(void)\n{\n    HASHTABLE   *new = calloc(HASHTABLE_SIZE, sizeof(LIST *));\n\n    CHECK_ALLOC(new);\n    return new;\n}\n\n//  ADD A NEW STRING TO A GIVEN HASHTABLE\nvoid hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory)\n{\n    uint32_t h   = hash_string(filename) % HASHTABLE_SIZE;    // choose list\n\n    hashtable[h] = list_add(hashtable[h], filename, directory);\n}\n\n//  DETERMINE IF A REQUIRED STRING ALREADY EXISTS IN A GIVEN HASHTABLE\nbool hashtable_find(HASHTABLE *hashtable, char *string)\n{\n    uint32_t h\t= hash_string(string) % HASHTABLE_SIZE;     // choose list\n\n    return list_find(hashtable[h], string);\n}\nvoid hashtable_print(HASHTABLE *hashtable) {\n    for (int i = 0; i < HASHTABLE_SIZE; i++) {\n        LIST *current_list = hashtable[i];\n        if (current_list) { // Check if the bucket is not empty\n            printf(\"Bucket %d:\\n\", i); // Print the bucket number\n            while (current_list) {\n                printf(\"\\tDirectory: %s, Filename: %s\\n\", current_list->directory, current_list->filename);\n                current_list = current_list->next;\n            }\n            printf(\"\\n\"); // For better readability between buckets\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/hashtable.c b/hashtable.c
+--- a/hashtable.c	
++++ b/hashtable.c	
+@@ -8,7 +8,6 @@
+ 
+ //  RESEARCH SHOWS THAT USING PRIME-NUMBERS CAN IMPROVE PERFORMANCE
+ //  c.f.  https://www.quora.com/Why-should-the-size-of-a-hash-table-be-a-prime-number
+-#define	HASHTABLE_SIZE		997
+ 
+ //  --------------------------------------------------------------------
+ 
+@@ -38,12 +37,45 @@
+ }
+ 
+ //  ADD A NEW STRING TO A GIVEN HASHTABLE
+-void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory)
+-{
+-    uint32_t h   = hash_string(filename) % HASHTABLE_SIZE;    // choose list
++void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory) {
++    uint32_t h = hash_string(filename) % HASHTABLE_SIZE; // choose list
++    char *fullpath = consturctFilepath(directory, filename);
++
++    char *dir;
++    char *filepath;
++
++    char *slashposition = strchr(fullpath, '/');
++    if (!slashposition) {
++        printf("Slash not found in fullpath!\n");
++        free(fullpath);
++        return;
++    }
++
++    int dirlen = slashposition - fullpath;
++    int filepathlen = strlen(fullpath) - dirlen - 1;
++
++    dir = (char *) malloc((dirlen + 1) * sizeof(char));
++    filepath = (char *) malloc((filepathlen + 1) * sizeof(char));
++    if (!dir || !filepath) {
++        printf("Memory allocation failed!\n");
++        free(fullpath);
++        return;
++    }
+ 
+-    hashtable[h] = list_add(hashtable[h], filename, directory);
++    // Copy strings into allocated memory
++    strncpy(dir, fullpath, dirlen);
++    dir[dirlen] = '\0';
++
++    strcpy(filepath, slashposition + 1);
++
++    hashtable[h] = list_add(hashtable[h], filepath, findDirIndex(dir)); // change to dirindex
++
++    // Don't forget to free memory when done
++    free(fullpath);
++    free(dir);
++    free(filepath);
+ }
++
+ 
+ //  DETERMINE IF A REQUIRED STRING ALREADY EXISTS IN A GIVEN HASHTABLE
+ bool hashtable_find(HASHTABLE *hashtable, char *string)
+@@ -58,7 +90,7 @@
+         if (current_list) { // Check if the bucket is not empty
+             printf("Bucket %d:\n", i); // Print the bucket number
+             while (current_list) {
+-                printf("\tDirectory: %s, Filename: %s\n", current_list->directory, current_list->filename);
++                printf("\tfilename: %s, directory index: %d\n", current_list->filepath, current_list->dirindex);
+                 current_list = current_list->next;
+             }
+             printf("\n"); // For better readability between buckets
+Index: list.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n#include \"mysync.h\"\n\n//  ON LINUX WE NEED TO PROTOTYPE THE (NON-STANDARD) strdup() FUNCTION \n//  WHY?  https://stackoverflow.com/questions/32944390/what-is-the-rationale-for-not-including-strdup-in-the-c-standard\n\n#if\tdefined(__linux__)\nextern\tchar\t*strdup(char *string);\n#endif\n\n//  ---------------------------------------------------------------------\n\n//  'CREATE' A NEW, EMPTY LIST - JUST A NULL POINTER\nLIST *list_new(void)\n{\n    return NULL;\n}\n\n//  DETERMINE IF A REQUIRED ITEM (A STRING) IS STORED IN A GIVEN LIST\nbool list_find(LIST *list, char *wanted)\n{\n    while(list != NULL) {\n        if(strcmp(list->filename, wanted) == 0) {\n            return true;\n        }\n        list\t= list->next;\n        }\n    return false;\n}\n\n//  ALLOCATE SPACE FOR A NEW LIST ITEM, TESTING THAT ALLOCATION SUCCEEDS\nLIST *list_new_item(char *newFilename, const char *newDirectory)\n{\n    LIST *new       = calloc(1, sizeof(LIST) );\n    CHECK_ALLOC(new);\n    new->filename     =  strdup(newFilename);\n    new ->directory = strdup(newDirectory);\n\n    CHECK_ALLOC(new->filename);\n    CHECK_ALLOC(new->directory);\n\n\n    new->next       =  NULL;\n    return new;\n}\n\n//  ADD A NEW (STRING) ITEM TO AN EXISTING LIST\nLIST *list_add(LIST *list, char *newfilename, const char *newdDirectory)\n{\n    LIST *new   = list_new_item(newfilename, newdDirectory);\n    new->next   = list;\n    return new;\n}\n\n//  PRINT EACH ITEM (A STRING) IN A GIVEN LIST TO stdout\nvoid list_print(LIST *list)\n{\n    if(list != NULL) {\n        while(list != NULL) {\n            printf(\"Directory: %s, Filename: %s\", list->directory, list->filename);\n            if(list->next != NULL) {\n                printf(\" -> \");\n                }\n            list\t= list->next;\n        }\n        printf(\"\\n\");\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/list.c b/list.c
+--- a/list.c	
++++ b/list.c	
+@@ -23,7 +23,7 @@
+ bool list_find(LIST *list, char *wanted)
+ {
+     while(list != NULL) {
+-        if(strcmp(list->filename, wanted) == 0) {
++        if(strcmp(list->filepath, wanted) == 0) {
+             return true;
+         }
+         list	= list->next;
+@@ -31,16 +31,44 @@
+     return false;
+ }
+ 
++LIST* list_pop(LIST **head) {
++    if (*head == NULL) {
++        return NULL;  // Return NULL if list is empty
++    }
++
++    // Save the head item
++    LIST *popped_item = *head;
++
++    // Move the head pointer to the next item
++    *head = (*head)->next;
++
++    // Remove 'next' link from the popped item to fully detach it from the list
++    popped_item->next = NULL;
++
++    return popped_item;
++}
++
++LIST* list_peek(LIST **head) {
++    if (*head == NULL) {
++        return NULL;  // Return NULL if list is empty
++    }
++
++    // Save the head item
++    LIST *popped_item = *head;
++
++    return popped_item;
++}
++
+ //  ALLOCATE SPACE FOR A NEW LIST ITEM, TESTING THAT ALLOCATION SUCCEEDS
+-LIST *list_new_item(char *newFilename, const char *newDirectory)
++LIST *list_new_item(char *filepath, int dirindex)
+ {
+     LIST *new       = calloc(1, sizeof(LIST) );
+     CHECK_ALLOC(new);
+-    new->filename     =  strdup(newFilename);
+-    new ->directory = strdup(newDirectory);
++    new->filepath     =  strdup(filepath);
++    new ->dirindex = dirindex;
+ 
+-    CHECK_ALLOC(new->filename);
+-    CHECK_ALLOC(new->directory);
++    CHECK_ALLOC(new->filepath);
++//    CHECK_ALLOC(new->dirindex);
+ 
+ 
+     new->next       =  NULL;
+@@ -48,9 +76,13 @@
+ }
+ 
+ //  ADD A NEW (STRING) ITEM TO AN EXISTING LIST
+-LIST *list_add(LIST *list, char *newfilename, const char *newdDirectory)
++LIST *list_add(LIST *list, char *filepath, int dirindex)
+ {
+-    LIST *new   = list_new_item(newfilename, newdDirectory);
++
++
++    //calculate dir index if exists add new if not
++    //add filepath to list, add index to list
++    LIST *new   = list_new_item(filepath, dirindex);
+     new->next   = list;
+     return new;
+ }
+@@ -60,7 +92,7 @@
+ {
+     if(list != NULL) {
+         while(list != NULL) {
+-            printf("Directory: %s, Filename: %s", list->directory, list->filename);
++            printf("filepath: %s, directory index: %i", list->filepath, list->dirindex);
+             if(list->next != NULL) {
+                 printf(" -> ");
+                 }
+Index: mysync.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// mysync.h\n#ifndef MYSYNC_H\n#define MYSYNC_H\n\n#include <stdbool.h>\n#include <stdio.h>\n#include <unistd.h>\n#include <dirent.h>\n#include <sys/types.h>\n#include <sys/stat.h>\n#include <string.h>\n\n// A HELPFUL PREPROCESSOR MACRO TO CHECK IF ALLOCATIONS WERE SUCCESSFUL\n#define CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }\n\n// OUR SIMPLE LIST DATATYPE - A DATA ITEM, AND A POINTER TO ANOTHER LIST\ntypedef struct _list {\n    char *filename;   // to store the name of the file\n    char *directory;  // to store the directory path\n    struct _list *next;\n} LIST;\n\n\n// THESE FUNCTIONS ARE DECLARED HERE, AND DEFINED IN list.c:\n\n// 'CREATE' A NEW, EMPTY LIST\nextern LIST *list_new(void);\n\n// ADD A NEW (STRING) ITEM TO AN EXISTING LIST\nextern LIST *list_add(LIST *list, char *newfilename, const char *newDirectory);\n\n// DETERMINE IF A REQUIRED ITEM (A STRING) IS STORED IN A GIVEN LIST\nextern bool list_find(LIST *list, char *wanted);\n\n// PRINT EACH ITEM (A STRING) IN A GIVEN LIST TO stdout\nextern void list_print(LIST *list);\n\n// WE DEFINE A HASHTABLE AS A (WILL BE, DYNAMICALLY ALLOCATED) ARRAY OF LISTs\ntypedef LIST * HASHTABLE;\n\n// THESE FUNCTIONS ARE DECLARED HERE, AND DEFINED IN hashtable.c :\n\n// ALLOCATE SPACE FOR A NEW HASHTABLE (AND ARRAY OF LISTS)\nextern HASHTABLE *hashtable_new(void);\n\n// ADD A NEW STRING TO A GIVEN HASHTABLE\nextern void hashtable_add(HASHTABLE *, char *filename, const char *directory);\n\n// DETERMINE IF A REQUIRED STRING ALREADY EXISTS IN A GIVEN HASHTABLE\nextern bool hashtable_find(HASHTABLE *, char *string);\n\n// Prints all the contents of the hashtable\nvoid hashtable_print(HASHTABLE *hashtable);\n\n\nvoid searchDir(const char *dirname);\n\n#endif  // MYSYNC_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/mysync.h b/mysync.h
+--- a/mysync.h	
++++ b/mysync.h	
+@@ -3,6 +3,7 @@
+ #define MYSYNC_H
+ 
+ #include <stdbool.h>
++#include <stdlib.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <dirent.h>
+@@ -15,8 +16,8 @@
+ 
+ // OUR SIMPLE LIST DATATYPE - A DATA ITEM, AND A POINTER TO ANOTHER LIST
+ typedef struct _list {
+-    char *filename;   // to store the name of the file
+-    char *directory;  // to store the directory path
++    char *filepath;   // filepath excluding the first directoru
++    int dirindex;  // to store the directory index
+     struct _list *next;
+ } LIST;
+ 
+@@ -26,8 +27,12 @@
+ // 'CREATE' A NEW, EMPTY LIST
+ extern LIST *list_new(void);
+ 
++extern LIST *list_pop(LIST **list);
++
++extern LIST *list_peek(LIST **list);
++
+ // ADD A NEW (STRING) ITEM TO AN EXISTING LIST
+-extern LIST *list_add(LIST *list, char *newfilename, const char *newDirectory);
++extern LIST *list_add(LIST *list, char *filepath, int dirindex);
+ 
+ // DETERMINE IF A REQUIRED ITEM (A STRING) IS STORED IN A GIVEN LIST
+ extern bool list_find(LIST *list, char *wanted);
+@@ -39,6 +44,7 @@
+ typedef LIST * HASHTABLE;
+ 
+ // THESE FUNCTIONS ARE DECLARED HERE, AND DEFINED IN hashtable.c :
++#define	HASHTABLE_SIZE		997
+ 
+ // ALLOCATE SPACE FOR A NEW HASHTABLE (AND ARRAY OF LISTS)
+ extern HASHTABLE *hashtable_new(void);
+@@ -50,9 +56,19 @@
+ extern bool hashtable_find(HASHTABLE *, char *string);
+ 
+ // Prints all the contents of the hashtable
+-void hashtable_print(HASHTABLE *hashtable);
++extern void hashtable_print(HASHTABLE *hashtable);
++
+ 
++extern void searchDir(const char *dirname);
+ 
+-void searchDir(const char *dirname);
++extern void updateHash();
++
++extern void updateBucket(int bucket);
++
++extern void indexDirs(char *argv[], int argc, int dircount);
++
++extern char *consturctFilepath(const char *directory, char *filename);
++
++extern int findDirIndex(char *dir);
+ 
+ #endif  // MYSYNC_H
+Index: files.c
+===================================================================
+diff --git a/files.c b/files.c
+new file mode 100644
+--- /dev/null	
++++ b/files.c	
+@@ -0,0 +1,36 @@
++//
++// Created by RadRados on 19/10/2023.
++//
++
++#include "mysync.h"
++#include "globals.h"
++
++char *consturctFilepath(const char *directory, char *filename){
++    /////sgfadf
++    int totallength = strlen(directory)+ strlen(filename)+2;
++
++    char *totalpath = (char*) malloc(totallength * sizeof (char));
++
++    if(!totalpath){
++        printf("mem alloc error concatenate path\n");
++        exit(EXIT_FAILURE);
++    }
++
++    snprintf(totalpath, totallength, "%s/%s", directory, filename);
++
++
++    return totalpath;
++}
++
++int findDirIndex(char *dir){
++    int position = -1;
++    for(int i =0; i< dircount; i++){
++        if(strcmp(directories[i], dir)==0){
++            position= i;
++        }
++    }
++    if(position==-1){
++        printf("shits gone wrong with directories\n\n\n\n");
++    }
++    return position;
++}
+Index: updateFiles.c
+===================================================================
+diff --git a/updateFiles.c b/updateFiles.c
+new file mode 100644
+--- /dev/null	
++++ b/updateFiles.c	
+@@ -0,0 +1,54 @@
++//
++// Created by RadRados on 19/10/2023.
++//
++#include "globals.h"
++#include "mysync.h"
++
++time_t newest_mod_time(char *filename, int bucket){
++    LIST *current = filesHashtable[bucket];
++    struct stat file_stat;
++
++    if (stat(filename, &file_stat) != 0) {
++        perror("Failed to get file status");
++        return -1;
++    }
++
++    time_t mostRecent = file_stat.st_mtimespec.tv_sec;
++    printf("current most recent is %li\n", mostRecent);
++    while(current != NULL){
++        //check you can get the stat from filename
++        if (stat(current->filename, &file_stat) != 0) {
++            perror("Failed to get file status for list item");
++        } else {
++            //if current is more recent than mostrecent update morstrecent
++            if (file_stat.st_mtimespec.tv_sec > mostRecent) {
++                mostRecent = file_stat.st_mtimespec.tv_sec;
++            }
++        }
++        current = current->next;  // Move to the next item in the list
++    }
++    return mostRecent;
++}
++
++void updateBucket(int bucket){
++    LIST *list = filesHashtable[bucket];
++    LIST currfile;
++    long int mostrecent;
++    while(list != NULL){
++        currfile = *list_peek(&list);
++        mostrecent = newest_mod_time(currfile.filepath, bucket);//finds the modtime of the newest file with the filename of the top of the
++
++
++    }
++
++
++}
++void updateHash(){
++    if(verbose){
++        printf("UPDATING HASHTABLE\n");
++    }
++    for(int bucket = 0; bucket< HASHTABLE_SIZE; bucket++){
++        updateBucket(bucket);
++    }
++
++}
+Index: searchDir.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by RadRados on 16/10/2023.\n//\n#include \"mysync.h\"\n#include \"globals.h\"\n\nvoid searchDir(const char *dirname) {\n    struct dirent *file;\n    DIR *dir;\n\n    dir = opendir(dirname);\n    if (dir == NULL) {\n        perror(\"can not open directory %s\\n\");\n        return;\n    }\n\n    while ((file = readdir(dir)) != NULL) {\n        if (file->d_type == DT_DIR) {\n\n            if(recursive && strcmp(file->d_name, \".\") != 0 && strcmp(file->d_name, \"..\") != 0) {\n\n                if (verbose){\n                    printf(\"\\t%s is a directory.\\n\", file->d_name);\n\n                }//! searchDir(file);\n//                char new_path[1024];\n//                snprintf(new_path, sizeof(new_path), \"%s/%s\", dirname, file->d_name);\n//                searchDir(new_path);\n            } else{\n                continue;\n            }\n        }\n        if (file->d_name[0] == '.') {\n            if(verbose){\n                printf(\"\\t%s is a hidden file.\\n\", file->d_name);\n\n            }\n            if(all){//if -a is selected\n                hashtable_add(filesHashtable, file->d_name,dirname );//add hidden file to directory and the dirrectory it is in\n            } else{\n                continue;\n            }\n        }\n        printf(\"\\t%s is a normal file.\\n\", file->d_name);\n\n        hashtable_add(filesHashtable, file->d_name,dirname );//add normal file to directory and the dirrectory it is in\n    }\n\n    closedir(dir);\n}\n\n
+===================================================================
+diff --git a/searchDir.c b/searchDir.c
+--- a/searchDir.c	
++++ b/searchDir.c	
+@@ -20,12 +20,16 @@
+             if(recursive && strcmp(file->d_name, ".") != 0 && strcmp(file->d_name, "..") != 0) {
+ 
+                 if (verbose){
+-                    printf("\t%s is a directory.\n", file->d_name);
++                    printf("\t%s is a directory.=================\n", file->d_name);
++
++                }
++                //search directory
++                char* newpath = consturctFilepath(dirname, file->d_name);
++                searchDir(newpath);
++                free(newpath); // Important: free the memory allocated by consturctFilepath
+ 
+-                }//! searchDir(file);
+-//                char new_path[1024];
+-//                snprintf(new_path, sizeof(new_path), "%s/%s", dirname, file->d_name);
+-//                searchDir(new_path);
++
++
+             } else{
+                 continue;
+             }
+@@ -41,11 +45,53 @@
+                 continue;
+             }
+         }
+-        printf("\t%s is a normal file.\n", file->d_name);
++        printf("\t/%s is a normal file.\n", file->d_name);
+ 
+         hashtable_add(filesHashtable, file->d_name,dirname );//add normal file to directory and the dirrectory it is in
+     }
+ 
+     closedir(dir);
+ }
++void indexDirs(char *argv[], int argc, int dircount){
++
++    int max_length = 0;
++
++    // Find the maximum length in argv
++    for(int i = 0; i < argc; i++){
++        int current_length = strlen(argv[i]);
++        if(current_length > max_length){
++            max_length = current_length;
++        }
++    }
++
++    // Allocate memory for directories
++    directories = (char**) malloc(dircount * sizeof(char*)); // Allocating for pointers
++    if(!directories){
++        printf("Error allocating memory for directories array\n");
++        return;
++    }
++
++    for(int i = 0; i < dircount; i++){
++        directories[i] = (char*) malloc((max_length + 1) * sizeof(char)); // +1 for the null terminator
++        if(!directories[i]){
++            printf("Error allocating memory for directories[%d]\n", i);
++            return;  // Consider freeing previously allocated memory before returning
++        }
++    }
++
++    // Copying directory names into directories (just an example, adapt as necessary)
++    for(int argument = 0; argument < dircount; argument++){
++        strncpy(directories[argument], argv[argument + (argc - dircount)], max_length);
++        directories[argument][max_length] = '\0';  // Ensure null termination
++    }
++
++    // Printing for verification
++    if(verbose) {
++        for (int i = 0; i < dircount; i++) {
++            printf("~~%s\n", directories[i]);
++        }
++    }
++}
++
++
+ 
+Index: globals.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by RadRados on 19/10/2023.\n//\n#include \"globals.h\"\n#include \"mysync.h\"\n\n\nint verbose = 0;\nbool all = false;\nbool recursive = false;\nbool notchange = false;\nbool permisions = false;\nchar *only = NULL;\nchar *ignore = NULL;
+===================================================================
+diff --git a/globals.c b/globals.c
+--- a/globals.c	
++++ b/globals.c	
+@@ -11,4 +11,6 @@
+ bool notchange = false;
+ bool permisions = false;
+ char *only = NULL;
+-char *ignore = NULL;
+\ No newline at end of file
++char *ignore = NULL;
++int dircount = 0;
++char *directories;
+\ No newline at end of file
+Index: globals.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// globals.h\n#ifndef GLOBALS_H\n#define GLOBALS_H\n#include <stdbool.h>\n\n// Forward declaration of LIST\nstruct _list;\ntypedef struct _list LIST;\n\n// Define HASHTABLE as a pointer to LIST based on the forward declaration\ntypedef LIST *HASHTABLE;\n\n// Declare the global variable\n\nextern int verbose;\nextern bool all;\nextern bool recursive;\nextern bool notchange;\nextern bool permisions;\nextern char *only;\nextern char *ignore;\n\n\nextern HASHTABLE *filesHashtable;\n\n\n#endif  // GLOBALS_H\n
+===================================================================
+diff --git a/globals.h b/globals.h
+--- a/globals.h	
++++ b/globals.h	
+@@ -19,6 +19,8 @@
+ extern bool permisions;
+ extern char *only;
+ extern char *ignore;
++extern int dircount;
++extern char **directories;
+ 
+ 
+ extern HASHTABLE *filesHashtable;

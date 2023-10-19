@@ -16,6 +16,6 @@ bool permisions = false;
 char *only = NULL;
 char *ignore = NULL;
 int dircount = 0;
-char *directories;
+char **directories;
 
 HASHTABLE filesHashtable;  // definition

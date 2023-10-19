@@ -18,7 +18,7 @@ void searchDir(const char *dirname) {
     }
 
     while ((file = readdir(dir)) != NULL) {
-        if (file->d_type == DT_DIR) {
+        if (file->d_type == DT_DIR) {//if it is a directory
 
             if(recursive && strcmp(file->d_name, ".") != 0 && strcmp(file->d_name, "..") != 0) {
 
@@ -33,7 +33,7 @@ void searchDir(const char *dirname) {
                 continue;
             }
         }
-        if (file->d_name[0] == '.') {
+        else if (file->d_name[0] == '.') {// is it a hidden file
             if(verbose){
                 printf("\t%s is a hidden file.\n", file->d_name);
 
@@ -43,10 +43,14 @@ void searchDir(const char *dirname) {
             } else{
                 continue;
             }
+        }else {
+            printf("\t%s is a normal file.\n", file->d_name);
+            printf("segfaulttest\n");
+            hashtable_add(&filesHashtable, file->d_name,
+                          dirname);//add normal file to directory and the dirrectory it is in
+            printf("segfaulttes2\n");
         }
-        printf("\t%s is a normal file.\n", file->d_name);
 
-        hashtable_add(&filesHashtable, file->d_name,dirname );//add normal file to directory and the dirrectory it is in
     }
 
     closedir(dir);
@@ -63,13 +67,20 @@ void indexDirs(char *argv[], int argc, int dircount){
         }
     }
 
-    char (*directories)[max_length] = malloc(dircount * sizeof(char[max_length]));
+    directories = malloc(dircount * sizeof(char *));
     if(!directories){
         printf("error allocating memeory for directories array\n");
     }
-    for(int argument = 0; argument <dircount; argument++){
-        printf("~~%s", argv[argument+ (argc - dircount)]);
-
+    // Allocate memory for each individual string and copy from argv
+    for(int argument = 0; argument < dircount; argument++){
+        directories[argument] = malloc((max_length + 1) * sizeof(char)); // +1 for null terminator
+        if (!directories[argument]) {
+            printf("error allocating memory for directory string\n");
+            return;
+        }
+        strcpy(directories[argument], argv[argument + (argc - dircount)]);
+        printf("~~%s", directories[argument]);
     }
+
 
 }
