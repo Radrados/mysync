@@ -52,13 +52,11 @@ LIST* list_peek(LIST **head) {
     if (*head == NULL) {
         return NULL;  // Return NULL if list is empty
     }
-    printf("segfaulttest peektest\n");
-
+\
 
     // Save the head item
     LIST *popped_item = *head;
-    printf("segfaulttest peektest2\n");
-
+\
     return popped_item;
 }
 
@@ -85,11 +83,8 @@ LIST *list_add(LIST *list, char *filepath, int dirindex)
 
     //calculate dir index if exists add new if not
     //add filepath to list, add index to list
-    printf("segfaulttest9.1\n");
     LIST *new   = list_new_item(filepath, dirindex);
-    printf("segfaulttest9.2\n");
     new->next   = list;
-    printf("segfaulttest9.3\n");
     return new;
 }
 

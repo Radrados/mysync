@@ -24,7 +24,6 @@ char *consturctFilepath(const char *directory, char *filename){
 
 int findDirIndex(char *dir){
     int position = -1;
-    printf("segfaulttest9.1.1\n");
     for(int i =0; i< dircount; i++){
         if(strcmp(directories[i], dir)==0){//this is ine 28
             position= i;

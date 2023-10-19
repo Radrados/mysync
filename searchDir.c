@@ -45,10 +45,8 @@ void searchDir(const char *dirname) {
             }
         }else {
             printf("\t%s is a normal file.\n", file->d_name);
-            printf("segfaulttest\n");
             hashtable_add(&filesHashtable, file->d_name,
                           dirname);//add normal file to directory and the dirrectory it is in
-            printf("segfaulttes2\n");
         }
 
     }

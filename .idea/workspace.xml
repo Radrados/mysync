@@ -9,15 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="fixed files after recovery">
-      <change beforePath="$PROJECT_DIR$/files.c" beforeDir="false" afterPath="$PROJECT_DIR$/files.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/globals.c" beforeDir="false" afterPath="$PROJECT_DIR$/globals.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/globals.h" beforeDir="false" afterPath="$PROJECT_DIR$/globals.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hashtable.c" beforeDir="false" afterPath="$PROJECT_DIR$/hashtable.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/list.c" beforeDir="false" afterPath="$PROJECT_DIR$/list.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchDir.c" beforeDir="false" afterPath="$PROJECT_DIR$/searchDir.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updateFiles.c" beforeDir="false" afterPath="$PROJECT_DIR$/updateFiles.c" afterDir="false" />
-    </list>
+    <list default="true" id="59e17600-acf4-4458-b192-1c2a2183598d" name="Changes" comment="fixed files after recovery" />
     <list id="24f8af67-a0c2-40df-994e-07b39aff1e4f" name="Changes by adits" comment="Changes by adits" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +67,7 @@
       <updated>1695810657547</updated>
       <workItem from="1695810659711" duration="612000" />
       <workItem from="1696274535816" duration="1201000" />
-      <workItem from="1697466844740" duration="50037000" />
+      <workItem from="1697466844740" duration="50480000" />
     </task>
     <task id="LOCAL-00001" summary="yes">
       <option name="closed" value="true" />

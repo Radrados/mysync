@@ -38,11 +38,9 @@ HASHTABLE *hashtable_new(void)
 
 //  ADD A NEW STRING TO A GIVEN HASHTABLE
 void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory) {
-    printf("segfaulttest3\n");
 
     uint32_t h = hash_string(filename) % HASHTABLE_SIZE; // choose list
     char *fullpath = consturctFilepath(directory, filename);
-    printf("segfaulttest4\n");
     char *dir;
     char *filepath;
 
@@ -52,7 +50,6 @@ void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory) 
         free(fullpath);
         return;
     }
-    printf("segfaulttest5\n");
     int dirlen = slashposition - fullpath;
     int filepathlen = strlen(fullpath) - dirlen - 1;
 
@@ -63,15 +60,11 @@ void hashtable_add(HASHTABLE *hashtable, char *filename, const char *directory) 
         free(fullpath);
         return;
     }
-    printf("segfaulttest6\n");
     // Copy strings into allocated memory
     strncpy(dir, fullpath, dirlen);
     dir[dirlen] = '\0';
-    printf("segfaulttest8\n");
     strcpy(filepath, slashposition + 1);
-    printf("segfaulttest9\n");
     hashtable[h] = list_add(hashtable[h], filepath, findDirIndex(dir)); // change to dirindex
-    printf("segfaulttest10\n");
     // Don't forget to free memory when done
     free(fullpath);
     free(dir);
