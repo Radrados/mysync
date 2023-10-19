@@ -58,4 +58,14 @@ int main(int argc, char *argv[]){
         vprint("permisions transfer mode active\n");
     }
     vprint("number of options: %i\n\n", optcount);
+
+    //for each directory fed to program
+    for(int argument = optcount+1; argument <  argc; argument++){
+        if(!canOpenDir(argv[argument])){
+            printf("Can not open directory %s\n", argv[argument]);
+        }
+        vprint("directory %i is : %s\n", argument-optcount, argv[argument]);
+    }
+    vprint("\n");
+
 }

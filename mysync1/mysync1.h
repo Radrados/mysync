@@ -20,6 +20,8 @@ extern void vprint(const char *fmt, ...);
 
 extern int usage();
 
+extern bool canOpenDir(char * directory);
+
 // OUR SIMPLE LIST DATATYPE - A DATA ITEM, AND A POINTER TO ANOTHER LIST
 typedef struct _list {
     char *filepath;   // filepath excluding the first directoru
