@@ -88,11 +88,11 @@ int main(int argc, char *argv[]){
 
     }
 
-
+    syncHash();
 
     hashtable_print();
     vprint("\n");
-    printf(">>>>>>>>end>>>>>>>>\n");
+    printf(">>>>>>>>ending>>>f>>>>>\n");
 
 
 

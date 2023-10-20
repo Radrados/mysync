@@ -18,6 +18,7 @@
 
 #define CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
 
+extern void syncHash();
 
 extern void vprint(const char *fmt, ...);
 
@@ -43,7 +44,7 @@ extern LIST *list_new(void);
 
 extern LIST *list_pop(LIST **list);
 
-extern LIST *list_peek(LIST **list);
+//extern LIST *list_peek(LIST **list);
 
 // ADD A NEW (STRING) ITEM TO AN EXISTING LIST
 extern LIST *list_add(LIST *list, char *filepath, int dirindex, long int modTime);
@@ -80,6 +81,7 @@ extern bool hashtable_find(char *string);
 extern void hashtable_print();
 
 extern void initialize_directories(char *argv[], int argc, int optcount) ;
+
 
 
 

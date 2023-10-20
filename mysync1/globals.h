@@ -19,6 +19,7 @@ extern char *ignore;
 extern int dircount;
 extern char **directories;
 
+
 extern void initialize_globals();
 
 
