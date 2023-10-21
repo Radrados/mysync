@@ -15,6 +15,8 @@
 #include <string.h>
 #include <stdarg.h>
 #include <time.h>
+#include <utime.h>
+
 
 #define CHECK_ALLOC(p) if(p == NULL) { perror(__func__); exit(EXIT_FAILURE); }
 
@@ -83,6 +85,9 @@ extern void hashtable_print();
 extern void initialize_directories(char *argv[], int argc, int optcount) ;
 
 extern void updateFile(char *filename, int dirindex);
+
+extern char *combinefilepath(char* directory, char *filepath);
+
 
 
 

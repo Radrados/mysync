@@ -84,8 +84,21 @@ void copyfile(char *filetocopy, char *destinationdirectory){
     fclose(source);
     fclose(destination);
 
+    struct stat fileStat; // To hold the file attributes
 
-    //open sou
+
+    //if permisons chanhe them in dest file
+    if (permisions) {
+        // Set the permissions of the destination file
+        chmod(destinationdirectory, fileStat.st_mode);
+
+        // Set the modification time of the destination file
+        struct utimbuf new_times;
+        new_times.actime = fileStat.st_atime;   // Access time
+        new_times.modtime = fileStat.st_mtime;  // Modification time
+        utime(destinationdirectory, &new_times);
+    }
+
 
 }
 

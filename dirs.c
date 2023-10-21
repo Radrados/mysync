@@ -41,6 +41,7 @@ void searchDir(char * directory){
         //check if entry is directory /
         else if (entry->d_type == DT_DIR) {
             vprint("\t%s is a directory.\n", entry->d_name);
+            searchDir(combinefilepath(directory, entry->d_name));
         }
 
         //if not dir or hiden its a normal file
