@@ -85,9 +85,17 @@ void copyfile(char *filetocopy, char *destinationdirectory){
     struct stat fileStat;
 
 
+
+
     //if permisons are there, change them in destination file
     if (permisions) {
+
+        if(stat(filetocopy, &fileStat)==-1){
+            perror("stat");
+        }
+
         // set the permissions of the destination file
+
         chmod(destinationdirectory, fileStat.st_mode);
 
         //set the modification time of the destination file
