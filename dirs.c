@@ -1,19 +1,19 @@
-//
-// Created by RadRados on 19/10/2023.
-//
+//Include files
 #include "mysync1.h"
 #include "globals.h"
 
+//check if the directory can be opened at all
 bool canOpenDir(char *dirname){
     DIR *dir = opendir(dirname);
     if (dir != NULL) {
-        closedir(dir);  // Close the directory if it was opened successfully
-        return 1;  // Return 1 (true) if the directory can be opened
+        // Close the directory if it was opened successfully
+        closedir(dir);
+        return 1;
     }
-    return 0;  // Return 0 (false) if the directory cannot be opened
+    return 0;
 
 }
-
+// search the directory
 void searchDir(char * directory){
     //OPEN DIRECTORY AND STORE IT IN DIR TYPE OBJECT
     DIR *dir = opendir(directory);
@@ -21,7 +21,7 @@ void searchDir(char * directory){
     //STRUCT dirent IS THE NEXT entry IN DIRECTORY WHEN YOU CALL READIR
     struct dirent *entry;
 
-    //repeatedly get the next thing in directory
+    //repeatedly get the next file/folder in directory
     while((entry = readdir(dir)) != NULL){
 
         //entry is now the next entry from dir
@@ -38,24 +38,23 @@ void searchDir(char * directory){
             storeFileInHash(directory, entry->d_name);
         }
 
-        //check if entry is directory /
+        //check if entry is directory "/"
         else if (entry->d_type == DT_DIR) {
             vprint("\t%s is a directory.\n", entry->d_name);
             searchDir(combinefilepath(directory, entry->d_name));
         }
 
-        //if not dir or hiden its a normal file
+        //if not dir or hidden then its a normal file
         else{
             vprint("\t%s is a normal file\n", entry -> d_name);
             storeFileInHash(directory, entry->d_name);
 
         }
     }
-
-    //close directory
     closedir(dir);
 }
 
+// initialise directories for use
 void initialize_directories(char *argv[], int argc, int optcount) {
     // Find the length of the longest value in argv
     int max_len = 0;

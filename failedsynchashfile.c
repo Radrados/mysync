@@ -1,17 +1,13 @@
-//
-// Created by RadRados on 20/10/2023.
-//
-//
-// Created by RadRados on 19/10/2023.
-//
 #include "mysync1.h"
 #include "globals.h"
 
 
 // Peek at the first item in the list
 LIST* list_peek(LIST *list) {
-    return list; // simply return the head of the list
+    return list;
 }
+
+// grab the most recent file
 LIST *findMostRecent(LIST* list, char *wanted) {
     LIST *mostrecent = NULL;
 
@@ -39,7 +35,7 @@ LIST* removeFilepathFromList(char *filepath, LIST *list) {
         free(temp);
     }
 
-    // Now handle the rest of the list
+    // Handle the rest of the list
     LIST *current = list;
     while (current && current->next) {
         if (strcmp(current->next->filepath, filepath) == 0) {
@@ -51,8 +47,8 @@ LIST* removeFilepathFromList(char *filepath, LIST *list) {
             current = current->next;
         }
     }
-
-    return list;  // Return the potentially new head of the list
+    // return the potentially new head of the list
+    return list;
 }
 
 void syncHash() {
@@ -75,45 +71,3 @@ void syncHash() {
         }
     }
 }
-
-//
-//
-//void syncHash(){
-////
-////    int mostRecentDir=-1;
-////    long int mostRecentUpdate = -1;
-//    char filepath [256];
-//    LIST *current;
-//    LIST *temp;
-//
-//    //for each bucket
-//    for(int bucket = 0; bucket < HASHTABLE_SIZE; bucket++){
-//
-//        //assing first element of bucket to current
-//        current = list_peek(filesHashtable[bucket]);
-//
-//        //while tthere are items in bucket
-//        while(current != NULL) {
-//
-//
-//
-//            //find most recent
-//            temp = findMostRecent(filesHashtable[bucket], current->filepath);//make sure to send pointers so you can update them
-//            vprint("\t~~~~~~~~newest file is %s %i %li\n", temp->filepath, temp->dirindex, temp->modTime);
-//
-//            //remove all instanves of that filepath
-//            removeFilepathFromList( filepath, filesHashtable[bucket]);
-//
-//            //move on to next item in the list
-//            current = current->next;
-//
-//        }
-//    }
-//
-//
-//    //for each filepath
-//
-//    //find newest/only
-//
-//    //copy shit
-//}

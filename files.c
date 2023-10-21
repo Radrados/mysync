@@ -6,19 +6,17 @@
 #define BUFER_SIZE      1024
 
 char *combinefilepath(char* directory, char *filepath){
-
-    char *totalpath = malloc(strlen(directory) + strlen(filepath) + 2); // +2 for the slash and null-terminator
+    // +2 for the slash and null-terminator
+    char *totalpath = malloc(strlen(directory) + strlen(filepath) + 2);
 
     sprintf(totalpath, "%s/%s", directory, filepath);
-
-
-
     return totalpath;
 }
 
+// Stores file in a hash table
 void storeFileInHash(char *directory, char *filepath){
 
-    //variable to store fombined filepath
+    //variable to store combined filepath
     char totalpath[strlen(directory)+ strlen(filepath)+2];
 
     //combine dir and filepath into totalpath
@@ -31,8 +29,9 @@ void storeFileInHash(char *directory, char *filepath){
     if (stat(totalpath, &file_stat) == -1){
         perror("geting file stat error");
     }
-
-    modTime = (long int)file_stat.st_mtime;//get last mod time
+    
+    //get last mod time
+    modTime = (long int)file_stat.st_mtime;
 
     vprint("\t\tstoring %s/%s in hashtabe\n", directory, filepath)
 ;
@@ -48,28 +47,27 @@ void storeFileInHash(char *directory, char *filepath){
     hashtable_add(filepath, dirindex, modTime);
 }
 
+// function used to copy file
 void copyfile(char *filetocopy, char *destinationdirectory){
 
     FILE *source;
     FILE *destination;
 
-    size_t bytesRead;//what is this
-
-
+    size_t bytesRead;
 
     char buffer[BUFER_SIZE];
 
     //open source file with read permissions
-    source = fopen(filetocopy, "rb");//binary so that i can open any file
+    source = fopen(filetocopy, "rb");
 
     destination = fopen(destinationdirectory, "wb");
 
-    //chseck fileopening
+    //check fileopening
     if(source==NULL){
         vprint("unnable to open source file: %s\n", source);
     }
 
-    //chseck fileopening
+    //check fileopening
     if(destination==NULL){
         vprint("unnable to open dest file: %s\n", source);
     }
@@ -79,33 +77,33 @@ void copyfile(char *filetocopy, char *destinationdirectory){
         fwrite(buffer, 1, bytesRead, destination);
     }
 
-
     //close files
     fclose(source);
     fclose(destination);
 
-    struct stat fileStat; // To hold the file attributes
+    // to hold the file attributes
+    struct stat fileStat;
 
 
-    //if permisons chanhe them in dest file
+    //if permisons are there, change them in destination file
     if (permisions) {
-        // Set the permissions of the destination file
+        // set the permissions of the destination file
         chmod(destinationdirectory, fileStat.st_mode);
 
-        // Set the modification time of the destination file
+        //set the modification time of the destination file
         struct utimbuf new_times;
-        new_times.actime = fileStat.st_atime;   // Access time
-        new_times.modtime = fileStat.st_mtime;  // Modification time
+        // access time
+        new_times.actime = fileStat.st_atime;
+        // mod time
+        new_times.modtime = fileStat.st_mtime;
         utime(destinationdirectory, &new_times);
     }
-
-
 }
 
+// updates files that need updating
 void updateFile(char *filename, int dirindex){
 
     //find totalpath of most up to date file
-
     char *sourcefilepath;
 
     sourcefilepath = combinefilepath(directories[dirindex], filename);
@@ -118,17 +116,8 @@ void updateFile(char *filename, int dirindex){
 
             //copy filename into it
             copyfile(sourcefilepath, combinefilepath(directories[i], filename));
-
-
         }
     }
-
-    //check if filename already exists in dir
-
-    //if yes copy it
-
-    //if no, create it and copy it then
-
 }
 
 

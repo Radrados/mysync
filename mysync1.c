@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
                 optcount++;
                 break;
 
-            case 'n'://DO   NOT CHANGE PERMISIONS, SET VERBOSE
+            case 'n'://DO NOT CHANGE PERMISIONS, SET VERBOSE
                 notchange = true;
                 verbose = true;
                 optcount++;
