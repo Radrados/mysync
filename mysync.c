@@ -1,4 +1,7 @@
-#include "mysync1.h"
+// Rados Markovic 23423175
+// Aditya Patil   23367345
+
+#include "mysync.h"
 #include "globals.h"
 
 int main(int argc, char *argv[]){

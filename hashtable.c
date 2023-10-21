@@ -1,4 +1,4 @@
-#include "mysync1.h"
+#include "mysync.h"
 #include "globals.h"
 #include <stdint.h>
 // calculate a hash value for a given filepath

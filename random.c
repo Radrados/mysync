@@ -1,4 +1,4 @@
-#include "mysync1.h"
+#include "mysync.h"
 #include "globals.h"
 
 void vprint(const char *fmt, ...) {

@@ -3,7 +3,7 @@
 #ifndef MYSYNC_GLOBALS_H
 #define MYSYNC_GLOBALS_H
 
-#include "mysync1.h"
+#include "mysync.h"
 //OPTIONS to checkout when looking for command-line options
 extern bool  verbose;
 extern bool all;

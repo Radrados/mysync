@@ -2,7 +2,7 @@
 // Created by RadRados on 19/10/2023.
 //
 #include "globals.h"
-#include "mysync1.h"
+#include "mysync.h"
 #define BUFER_SIZE      1024
 
 char *combinefilepath(char* directory, char *filepath){

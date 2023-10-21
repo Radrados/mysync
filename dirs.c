@@ -1,5 +1,5 @@
 //Include files
-#include "mysync1.h"
+#include "mysync.h"
 #include "globals.h"
 
 //check if the directory can be opened at all
