@@ -1,6 +1,3 @@
-//
-// Created by RadRados on 19/10/2023.
-//
 #include "mysync1.h"
 #include "globals.h"
 
@@ -23,12 +20,7 @@ LIST *findMostRecent(LIST *head, char *filepath) {
 
     return mostRecent;
 }
-
-
-
 void removeFromBucket(int bucket, char *filepath) {
-
-
     // Use a pointer-to-pointer approach. This allows us to easily update
     // pointers in the list irrespective of whether we're dealing with
     // the head of the list or a node in the middle.
@@ -39,14 +31,11 @@ void removeFromBucket(int bucket, char *filepath) {
     while (*current_ref != NULL) {
         // If the filepath of the current node matches the given filepath
         if (strcmp((*current_ref)->filepath, filepath) == 0) {
-            // Store the node that needs to be removed in node_to_remove
+            //store the node that needs to be removed in node_to_remove
 //            LIST *node_to_remove = *current_ref;
-
             // Update the pointer (could be the head of the list or a 'next' pointer of a node)
             // to skip the node that's being removed and point to the next node
             *current_ref = (*current_ref)->next;
-
-
         } else {
             // If the filepath of the current node doesn't match the given filepath,
             // move to the next node in the list by updating current_ref to point to the 'next' pointer of the current node.
@@ -55,12 +44,7 @@ void removeFromBucket(int bucket, char *filepath) {
     }
 }
 void syncHash(){
-
-    //filepath
-    //newest moddate
-    //newestdir
-
-    //for every bucket in hashfile
+    //filepath, new mod-date, new dir, for every bucket in hashfile
     for(int bucket =0; bucket< HASHTABLE_SIZE; bucket++) {
 
         //current is the first item in bucket
@@ -73,8 +57,6 @@ void syncHash(){
             LIST *mostRecent = findMostRecent(filesHashtable[bucket], current -> filepath);
 
             //print mostrecentnode
-
-            //if not
             if(!notchange){
                 updateFile(mostRecent->filepath, mostRecent->dirindex);
             }
@@ -91,9 +73,5 @@ void syncHash(){
             current = filesHashtable[bucket];
 
         }
-
-
-            //keepOnlyNewest(buvket, filename)// iterate over bucket deleting eveerything with filepath and not newest mdodate
-
     }
 }

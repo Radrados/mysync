@@ -1,6 +1,6 @@
-//
-// Created by RadRados on 19/10/2023.
-//
+//  CITS2002 Project 2 2023
+//  Student1:   23367345   ADITYA PATIL
+//  Student2:   23423175   RAD MARKOVIC
 
 #ifndef MYSYNC_MYSYNC1_H
 #define MYSYNC_MYSYNC1_H
@@ -32,9 +32,12 @@ extern void searchDir(char * directory);
 
 // OUR SIMPLE LIST DATATYPE - A DATA ITEM, AND A POINTER TO ANOTHER LIST
 typedef struct _list {
-    char *filepath;   // filepath excluding the first directoru
-    int dirindex;  // to store the directory index
-    long int modTime; // to store the time since 1970 it was last modded
+    // filepath excluding the first directoru
+    char *filepath;
+     // to store the directory index 
+    int dirindex;
+    // to store the time since 1970 it was last modded
+    long int modTime;
     struct _list *next;
 } LIST;
 

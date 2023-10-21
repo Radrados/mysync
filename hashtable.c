@@ -1,6 +1,7 @@
 #include "mysync1.h"
 #include "globals.h"
-
+#include <stdint.h>
+// calculate a hash value for a given filepath
 uint32_t hash_string(char *filepath)
 {
     uint32_t hash = 0;
@@ -11,6 +12,8 @@ uint32_t hash_string(char *filepath)
     }
     return hash;
 }
+
+// initialize the global hashtable for storing file information
 void hashtable_initialize(void)
 {
     for(int i = 0; i < HASHTABLE_SIZE; i++)
@@ -34,12 +37,12 @@ bool hashtable_find(char *filepath)
 }
 
 
-
+// print hashtable contents when needed (-v)
 void hashtable_print(void){
     printf("=== Files Hashtable ===\n");
-
     for (uint32_t i = 0; i < HASHTABLE_SIZE; i++) {
-        if (filesHashtable[i] != NULL) { // Check if the bucket has content
+        // check if the bucket has content
+        if (filesHashtable[i] != NULL) {
 
             LIST *current = filesHashtable[i];
             printf("Bucket %u: ", i);

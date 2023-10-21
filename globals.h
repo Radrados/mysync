@@ -1,12 +1,10 @@
-//
-// Created by RadRados on 19/10/2023.
-//
+// globals.h file
 
 #ifndef MYSYNC_GLOBALS_H
 #define MYSYNC_GLOBALS_H
 
 #include "mysync1.h"
-//OPTIONS
+//OPTIONS to checkout when looking for command-line options
 extern bool  verbose;
 extern bool all;
 extern bool recursive;
@@ -19,11 +17,6 @@ extern char *ignore;
 extern int dircount;
 extern char **directories;
 
-
 extern void initialize_globals();
 
-
-
-
-
-#endif //MYSYNC_GLOBALS_H
+#endif
