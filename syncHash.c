@@ -40,7 +40,7 @@ void removeFromBucket(int bucket, char *filepath) {
         // If the filepath of the current node matches the given filepath
         if (strcmp((*current_ref)->filepath, filepath) == 0) {
             // Store the node that needs to be removed in node_to_remove
-            LIST *node_to_remove = *current_ref;
+//            LIST *node_to_remove = *current_ref;
 
             // Update the pointer (could be the head of the list or a 'next' pointer of a node)
             // to skip the node that's being removed and point to the next node
@@ -73,7 +73,15 @@ void syncHash(){
             LIST *mostRecent = findMostRecent(filesHashtable[bucket], current -> filepath);
 
             //print mostrecentnode
-            vprint("most recent %s in %i at %li\n", mostRecent->filepath, mostRecent->dirindex, mostRecent->modTime);
+
+            //if not
+            if(!notchange){
+                updateFile(mostRecent->filepath, mostRecent->dirindex);
+            }
+            else{
+                vprint("~~~~~~~~~~~~~file to be copied it %s in %s modtime: %li\n", mostRecent->filepath, directories[mostRecent->dirindex], mostRecent->modTime);
+
+            }
 
             //remove all nodes with same filepath as current but the newest node from bucket
             vprint("removing %s froem bucket\n", current->filepath);

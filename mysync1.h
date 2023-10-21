@@ -82,7 +82,7 @@ extern void hashtable_print();
 
 extern void initialize_directories(char *argv[], int argc, int optcount) ;
 
-
+extern void updateFile(char *filename, int dirindex);
 
 
 

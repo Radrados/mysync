@@ -3,10 +3,17 @@
 //
 #include "globals.h"
 #include "mysync1.h"
+#define BUFER_SIZE      1024
 
-char *combinefilepath(char* directory, char *fileapth){
-    printf("SFASFSa%s%s", directory, fileapth);
-    return directory;
+char *combinefilepath(char* directory, char *filepath){
+
+    char *totalpath = malloc(strlen(directory) + strlen(filepath) + 2); // +2 for the slash and null-terminator
+
+    sprintf(totalpath, "%s/%s", directory, filepath);
+
+
+
+    return totalpath;
 }
 
 void storeFileInHash(char *directory, char *filepath){
@@ -40,3 +47,98 @@ void storeFileInHash(char *directory, char *filepath){
 
     hashtable_add(filepath, dirindex, modTime);
 }
+
+void copyfile(char *filetocopy, char *destinationdirectory){
+
+    FILE *source;
+    FILE *destination;
+
+    size_t bytesRead;//what is this
+
+
+
+    char buffer[BUFER_SIZE];
+
+    //open source file with read permissions
+    source = fopen(filetocopy, "rb");//binary so that i can open any file
+
+    destination = fopen(destinationdirectory, "wb");
+
+    //chseck fileopening
+    if(source==NULL){
+        vprint("unnable to open source file: %s\n", source);
+    }
+
+    //chseck fileopening
+    if(destination==NULL){
+        vprint("unnable to open dest file: %s\n", source);
+    }
+
+    // Copy the file content from source to destination using chunks
+    while ((bytesRead = fread(buffer, 1, sizeof(buffer), source)) > 0) {
+        fwrite(buffer, 1, bytesRead, destination);
+    }
+
+
+    //close files
+    fclose(source);
+    fclose(destination);
+
+
+    //open sou
+
+}
+
+void updateFile(char *filename, int dirindex){
+
+    //find totalpath of most up to date file
+
+    char *sourcefilepath;
+
+    sourcefilepath = combinefilepath(directories[dirindex], filename);
+
+    //for each directory except dirindex
+    for(int i = 0; i< dircount; i ++){
+
+        //if dir isnts dirindex
+        if (dirindex != i) {
+
+            //copy filename into it
+            copyfile(sourcefilepath, combinefilepath(directories[i], filename));
+
+
+        }
+    }
+
+    //check if filename already exists in dir
+
+    //if yes copy it
+
+    //if no, create it and copy it then
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

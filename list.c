@@ -46,6 +46,7 @@ LIST *list_add(LIST *list, char *new_filepath, int dirindex, long int modTime)
 
 }
 
+
 // Print each item in the list
 void list_print(LIST *list)
 {
